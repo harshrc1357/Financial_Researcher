@@ -1,45 +1,90 @@
-# Financial Researcher Crew
+# 📈 Financial Researcher - Multi-Agent Company Research & Report System
 
-Welcome to the FinancialResearcher Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+A multi-agent AI research pipeline built with CrewAI that performs web research on a company and produces a structured financial/market analysis report in Markdown.
 
-## Installation
+![CrewAI](https://img.shields.io/badge/CrewAI-000000?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
-Ensure you have Python >=3.10 <3.13 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+## ✨ Features
 
-First, if you haven't already, install uv:
+- **Two-Agent Workflow**: Researcher gathers sources; Analyst synthesizes insights
+- **Web Search Tooling**: Uses SerperDevTool for fast, targeted web research
+- **Report Generation**: Produces a polished Markdown report with clear headings and an executive summary
+- **Config-Driven**: Agents and tasks defined in YAML for quick customization
 
+## 🏗️ Architecture
+
+The system uses a **CrewAI** framework with two specialized agents:
+
+- **Researcher Agent**
+  - Uses `SerperDevTool` to collect relevant sources and facts about `{company}`
+  - Organizes findings into structured sections (status, performance, news, outlook)
+
+- **Analyst Agent**
+  - Reviews the research context
+  - Produces a comprehensive report with analysis, trends, and a market outlook disclaimer
+
+## 📋 Prerequisites
+
+- Python >=3.10 <3.13
+- [UV](https://docs.astral.sh/uv/) package manager
+- API keys required by configured tools/models
+
+## 🛠️ Installation
+
+1. Install UV:
 ```bash
 pip install uv
 ```
 
-Next, navigate to your project directory and install the dependencies:
-
-(Optional) Lock the dependencies and install them by using the CLI command:
+2. Install dependencies:
 ```bash
 crewai install
 ```
-### Customizing
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
-
-- Modify `src/financial_researcher/config/agents.yaml` to define your agents
-- Modify `src/financial_researcher/config/tasks.yaml` to define your tasks
-- Modify `src/financial_researcher/crew.py` to add your own logic, tools and specific args
-- Modify `src/financial_researcher/main.py` to add custom inputs for your agents and tasks
-
-## Running the Project
-
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
-
-```bash
-$ crewai run
+3. Create a `.env` file in the project root (typical setup):
+```env
+OPENAI_API_KEY=your_key_here
+GROQ_API_KEY=your_key_here
+SERPER_API_KEY=your_key_here
 ```
 
-This command initializes the financial_researcher Crew, assembling the agents and assigning them tasks as defined in your configuration.
+## 🎯 Usage
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+Run from project root:
+```bash
+crewai run
+```
 
-## Understanding Your Crew
+The default company is set in `src/financial_researcher/main.py` (e.g., "Perpetua Resources Corp").
 
-The financial_researcher Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+## ⚙️ Configuration
 
+- **Agents**: `src/financial_researcher/config/agents.yaml`
+- **Tasks**: `src/financial_researcher/config/tasks.yaml`
+- **Company input**: Edit `src/financial_researcher/main.py`
+- **Crew workflow**: `src/financial_researcher/crew.py`
+
+## 📁 Project Structure
+
+```text
+financial_researcher/
+├── src/financial_researcher/
+│   ├── main.py
+│   ├── crew.py
+│   ├── config/
+│   │   ├── agents.yaml
+│   │   └── tasks.yaml
+│   └── tools/
+├── knowledge/
+├── output/
+└── pyproject.toml
+```
+
+## 📤 Output
+
+Final report is saved to `output/report.md`.
+
+## 🛠️ Technologies
+
+CrewAI, Python, SerperDevTool, OpenAI GPT-4o-mini, Groq (Llama 3.3 70B)
